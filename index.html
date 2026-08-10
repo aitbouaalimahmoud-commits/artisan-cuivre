@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuivre Abderrazak - Artisanat Traditionnel du Cuivre</title>
+    
+    <!-- Meta SEO -->
+    <meta name="description" content="Découvrez Cuivre Abderrazak, dédié à l'artisanat traditionnel marocain du cuivre. Des lanternes, théières et plateaux façonnés et gravés à la main à Marrakech.">
+    <meta name="keywords" content="artisanat marocain, cuivre marocain, dinanderie, lanterne marocaine, théière marocaine, plateau cuivre, fait main, artisan Fès">
+    <meta name="author" content="Abderrazak Ait Brahim">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Leaflet.js CSS for Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-textured">
+
+    <!-- ==========================================================================
+       HEADER / NAVIGATION
+       ========================================================================== -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo" id="logo-link">
+                <div class="logo-icon">C</div>
+                <span>Cuivre Abderrazak</span>
+            </a>
+            
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#accueil">Accueil</a></li>
+                    <li><a href="#produits">Créations</a></li>
+                    <li><a href="#savoir-faire">Savoir-Faire</a></li>
+                    <li><a href="#galerie">Galerie</a></li>
+                    <li><a href="#a-propos">L'Artisan</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            
+            <div class="nav-actions">
+                <a href="https://wa.me/212670190161" target="_blank" class="btn btn-green btn-sm" id="nav-whatsapp-link">
+                    <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                </a>
+                <button class="burger-menu" id="burger-menu-btn" aria-label="Ouvrir le menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==========================================================================
+       HERO SECTION
+       ========================================================================== -->
+    <section id="accueil" class="hero">
+        <div class="container hero-grid">
+            <div class="hero-content">
+                <div class="hero-tagline">Héritage & Passion</div>
+                <h1>L'art du cuivre marocain, <br><span>façonné à la main</span></h1>
+                <p class="hero-description">
+                    Depuis plus de trois décennies au cœur de la médina de Marrakech, nous perpétuons l'art ancestral de la dinanderie. Chaque pièce est martelée et ciselée à la main, portant en elle l'âme du savoir-faire marocain traditionnel.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#produits" class="btn btn-primary" id="discover-btn">
+                        Découvrir nos créations <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                    <a href="#savoir-faire" class="btn btn-secondary" id="learn-more-btn">Notre savoir-faire</a>
+                </div>
+            </div>
+            
+            <div class="hero-image-wrapper">
+                <div class="hero-image-frame">
+                    <img src="assets/hero_artisan.png" alt="Artisan marocain travaillant le cuivre dans son atelier" id="hero-img">
+                </div>
+                <div class="hero-deco-border"></div>
+                <div class="hero-experience-badge">
+                    <span class="hero-experience-number">35+</span>
+                    <span class="hero-experience-text">Ans d'Artisanat</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+       PRODUCTS / CREATIONS SECTION
+       ========================================================================== -->
+    <section id="produits" class="products">
+        <div class="container">
+            <div class="section-header">
+                <h2>Nos Créations d'Exception</h2>
+                <p>Découvrez notre collection de pièces uniques façonnées à la main. Du luminaire oriental traditionnel aux objets de décoration contemporains.</p>
+            </div>
+            
+            <div class="products-filter">
+                <button class="filter-btn active" data-filter="all">Tout</button>
+                <button class="filter-btn" data-filter="luminaires">Luminaires</button>
+                <button class="filter-btn" data-filter="art-table">Art de la Table</button>
+                <button class="filter-btn" data-filter="decoration">Décoration</button>
+                <button class="filter-btn" data-filter="pieces-uniques">Pièces Uniques</button>
+            </div>
+            
+            <div class="products-grid" id="products-grid">
+                <!-- Products will be dynamically generated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+       SAVOIR-FAIRE SECTION
+       ========================================================================== -->
+    <section id="savoir-faire" class="savoir-faire">
+        <div class="container">
+            <div class="section-header">
+                <h2>Le Processus de Fabrication</h2>
+                <p>Chaque pièce nécessite des dizaines d'heures de travail minutieux. De la feuille de cuivre brut jusqu'à la brillance finale, découvrez les étapes de notre art.</p>
+            </div>
+            
+            <div class="process-timeline">
+                <div class="process-step">
+                    <div class="process-icon-wrapper">
+                        <i class="fa-solid fa-layer-group"></i>
+                        <div class="process-number">1</div>
+                    </div>
+                    <h3>Choix du Cuivre</h3>
+                    <p>Sélection rigoureuse des feuilles de cuivre rouge ou jaune de la plus haute pureté.</p>
+                </div>
+                
+                <div class="process-step">
+                    <div class="process-icon-wrapper">
+                        <i class="fa-solid fa-scissors"></i>
+                        <div class="process-number">2</div>
+                    </div>
+                    <h3>Découpe</h3>
+                    <p>Découpe manuelle de la feuille selon les patrons traditionnels ou des designs personnalisés.</p>
+                </div>
+                
+                <div class="process-step">
+                    <div class="process-icon-wrapper">
+                        <i class="fa-solid fa-hammer"></i>
+                        <div class="process-number">3</div>
+                    </div>
+                    <h3>Façonnage</h3>
+                    <p>Mise en forme de la pièce par martelage répété à chaud ou à froid sur l'enclume.</p>
+                </div>
+                
+                <div class="process-step">
+                    <div class="process-icon-wrapper">
+                        <i class="fa-solid fa-pen-nib"></i>
+                        <div class="process-number">4</div>
+                    </div>
+                    <h3>Gravure</h3>
+                    <p>Ciselage et gravure minutieuse des arabesques et motifs géométriques au burin.</p>
+                </div>
+                
+                <div class="process-step">
+                    <div class="process-icon-wrapper">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <div class="process-number">5</div>
+                    </div>
+                    <h3>Polissage</h3>
+                    <p>Traitement de surface et lustrage pour révéler l'éclat chaleureux du cuivre.</p>
+                </div>
+                
+                <div class="process-step">
+                    <div class="process-icon-wrapper">
+                        <i class="fa-solid fa-gem"></i>
+                        <div class="process-number">6</div>
+                    </div>
+                    <h3>Produit Final</h3>
+                    <p>Une création marocaine authentique, prête à illuminer et embellir votre demeure.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+       GALERIE SECTION
+       ========================================================================== */ -->
+    <section id="galerie" class="gallery">
+        <div class="container">
+            <div class="section-header">
+                <h2>Instants d'Atelier</h2>
+                <p>Une immersion visuelle au cœur de notre atelier, entre outils patinés, métaux chauds et détails de gravures.</p>
+            </div>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item wide">
+                    <img src="assets/hero_artisan.png" alt="Artisan gravant un plateau de cuivre" loading="lazy">
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <h4>Geste Ancestral</h4>
+                            <p>Le travail de gravure</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="assets/lantern.png" alt="Lanterne marocaine lumineuse" loading="lazy">
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <h4>Jeu d'Ombres</h4>
+                            <p>Lanterne Royale</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item tall">
+                    <img src="assets/vase.png" alt="Vase en cuivre martelé contemporain" loading="lazy">
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <h4>Texture & Forme</h4>
+                            <p>Vase Contemporain</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="assets/artisan_portrait.png" alt="Portrait de l'artisan Abderrazak" loading="lazy">
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <h4>Maître Artisan</h4>
+                            <p>Abderrazak Ait Brahim</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item wide">
+                    <img src="assets/teapot.png" alt="Théière marocaine et théière traditionnelle en cuivre" loading="lazy">
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <h4>L'Heure du Thé</h4>
+                            <p>Théière Fassi & Plateau</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="assets/tray.png" alt="Plateau géant ciselé en cuivre" loading="lazy">
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <h4>Ciselure Fine</h4>
+                            <p>Motifs géométriques</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+       ABOUT SECTION
+       ========================================================================== -->
+    <section id="a-propos" class="about">
+        <div class="container about-grid">
+            <div class="about-image-wrapper">
+                <div class="about-image-frame">
+                    <img src="assets/artisan_portrait.png" alt="Portrait d'Abderrazak Ait Brahim, artisan dinandier" id="about-img">
+                </div>
+                <div class="about-deco-square"></div>
+            </div>
+            
+            <div class="about-content">
+                <div class="hero-tagline">L'Homme derrière l'Art</div>
+                <h3>Maître Dinandier <span>Abderrazak Ait Brahim</span></h3>
+                <p class="about-story">
+                    Né dans les ruelles animées de la vieille médina de Marrakech, Abderrazak Ait Brahim a été initié à la dinanderie dès son plus jeune âge par son père et son grand-père. Pour lui, le cuivre n'est pas seulement un métal, c'est un moyen d'expression, une tradition vivante qu'il façonne avec passion au quotidien.
+                </p>
+                <p class="about-story" style="margin-top: -15px;">
+                    Chaque coup de marteau, chaque ligne gravée est le fruit de 35 années de recherche de la perfection. Son atelier est un lieu de transmission où il forme aujourd'hui la nouvelle génération d'artisans pour préserver ce patrimoine mondial immatériel.
+                </p>
+                
+                <div class="about-highlights">
+                    <div class="highlight-box">
+                        <div class="highlight-icon"><i class="fa-solid fa-medal"></i></div>
+                        <div>
+                            <h4>100% Fait Main</h4>
+                            <p>Aucune machine n'intervient dans la mise en forme ou la gravure.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="highlight-box">
+                        <div class="highlight-icon"><i class="fa-solid fa-scroll"></i></div>
+                        <div>
+                            <h4>Patrimoine Préservé</h4>
+                            <p>Motifs géométriques fassis authentiques datant du XIIe siècle.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="artisan-signature">
+                    <div>
+                        <div class="artisan-name">Abderrazak Ait Brahim</div>
+                        <div class="artisan-title">Maître Artisan Dinandier – Marrakech</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+       LOCATION / ATELIER SECTION
+       ========================================================================== -->
+    <section id="atelier" class="location">
+        <div class="container">
+            <div class="section-header">
+                <h2>Notre Atelier Historique</h2>
+                <p>Venez nous rendre visite au cœur de la médina de Marrakech pour voir l'artisan en action et découvrir nos pièces d'exposition.</p>
+            </div>
+            
+            <div class="location-grid">
+                <div class="map-wrapper">
+                    <!-- Leaflet map container -->
+                    <div id="map"></div>
+                </div>
+                
+                <div class="location-info-card">
+                    <div class="location-details">
+                        <div class="location-item">
+                            <div class="location-icon"><i class="fa-solid fa-map-pin"></i></div>
+                            <div>
+                                <h4>Adresse</h4>
+                                <p> Médina, Marrakech, Maroc</p>
+                            </div>
+                        </div>
+                        
+                        <div class="location-item">
+                            <div class="location-icon"><i class="fa-solid fa-phone"></i></div>
+                            <div>
+                                <h4>Téléphone</h4>
+                                <p>+212 670-190161</p>
+                            </div>
+                        </div>
+                        
+                        <div class="location-item">
+                            <div class="location-icon"><i class="fa-solid fa-envelope"></i></div>
+                            <div>
+                                <h4>E-mail</h4>
+                                <p>abderrazak.aitbrahim@gmail.com</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="opening-hours">
+                        <h3><i class="fa-solid fa-clock" style="color: var(--color-copper);"></i> Horaires d'Ouverture</h3>
+                        <div class="hours-table">
+                            <div class="hours-row">
+                                <span class="hours-day">Lundi - Vendredi</span>
+                                <span class="hours-time">09:00 - 19:00</span>
+                            </div>
+                            <div class="hours-row">
+                                <span class="hours-day">Samedi</span>
+                                <span class="hours-time">09:00 - 15:00</span>
+                            </div>
+                            <div class="hours-row">
+                                <span class="hours-day">Dimanche</span>
+                                <span class="hours-time">Fermé (Sur RDV)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+       CONTACT SECTION
+       ========================================================================== -->
+    <section id="contact" class="contact">
+        <div class="container contact-grid">
+            <div class="contact-info-side">
+                <div class="contact-intro">
+                    <div class="hero-tagline">Une Création sur Mesure ?</div>
+                    <h3>Donnons vie à vos projets en cuivre</h3>
+                    <p>
+                        Vous souhaitez une lanterne aux dimensions spécifiques, un plateau gravé d'armoiries de famille ou un projet architectural ? N'hésitez pas à nous faire part de vos besoins. Nous étudions toutes les demandes de personnalisation.
+                    </p>
+                </div>
+                
+                <div class="social-connect">
+                    <h4>Suivez Notre Art quotidiennement</h4>
+                    <div class="social-buttons">
+                        <a href="https://wa.me/212670190161" target="_blank" class="social-btn whatsapp-btn" aria-label="WhatsApp" id="contact-whatsapp">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </a>
+                        <a href="https://www.instagram.com/smaksoura?igsh=OWQ2b3IwNmlzZzl0label="Instagram" id="contact-instagram">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="https://www.facebook.com/share/1EY6rurDuV/" target="_blank" class="social-btn facebook-btn" aria-label="Facebook" id="contact-facebook">
+                            <i class="fa-brands fa-facebook-f"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contact-form-wrapper">
+                <form id="contact-form">
+                    <div class="form-message" id="form-message"></div>
+                    
+                    <div class="form-group">
+                        <label for="name">Nom Complet</label>
+                        <input type="text" id="name" class="form-control" placeholder="Votre nom complet" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Adresse E-mail</label>
+                        <input type="email" id="email" class="form-control" placeholder="votre.email@exemple.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Numéro de Téléphone (Optionnel)</label>
+                        <input type="tel" id="phone" class="form-control" placeholder="+212 670-190161"
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Votre Message / Votre Projet</label>
+                        <textarea id="message" class="form-control" placeholder="Décrivez la pièce souhaitée ou posez votre question..." required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-block" style="width: 100%;" id="send-form-btn">
+                        Envoyer le message <i class="fa-regular fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+       FOOTER
+       ========================================================================== -->
+    <footer>
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <a href="#" class="logo">
+                    <div class="logo-icon">C</div>
+                    <span>Cuivre Abderrazak</span>
+                </a>
+                <p>
+                    Artisans dinandiers de père en fils à Marrakech. Créations traditionnelles et contemporaines en cuivre pur façonnées à la main.
+                </p>
+                <div class="footer-social-links">
+                    <a href="https://www.facebook.com/share/1EY6rurDuV/" target="_blank" class="footer-social-btn" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://instagram.com" class="footer-social-btn" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://wa.me/212670190161" class="footer-social-btn" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-links">
+                <h3>Liens Rapides</h3>
+                <ul>
+                    <li><a href="#accueil">Accueil</a></li>
+                    <li><a href="#produits">Créations</a></li>
+                    <li><a href="#savoir-faire">Savoir-Faire</a></li>
+                    <li><a href="#galerie">Galerie d'Atelier</a></li>
+                    <li><a href="#a-propos">L'Artisan</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-contact">
+                <h3>Contact</h3>
+                <ul class="footer-contact-list">
+                    <li><i class="fa-solid fa-location-dot"></i> 12 Rue de la Kessaria, Médina, Marrakech, Maroc</li>
+                    <li><i class="fa-solid fa-phone"></i> +212 670-190161</li>
+                    <li><i class="fa-solid fa-envelope"></i> abderrazak.aitbrahim@gmail.com</li>
+                </ul>
+            </div>
+            
+            <div class="footer-social">
+                <h3>Notre Philosophie</h3>
+                <p style="color: rgba(250, 248, 245, 0.5); font-size: 0.9rem; line-height: 1.6;">
+                    "Le cuivre écoute le marteau, la gravure lui donne la parole. Notre mission est de faire chanter ce noble métal dans vos intérieurs."
+                </p>
+            </div>
+        </div>
+        
+        <div class="container footer-bottom">
+            <p>&copy; 2026 Cuivre Abderrazak. Tous droits réservés.</p>
+            <div class="footer-bottom-links">
+                <a href="#">Mentions Légales</a>
+                <a href="#">Conditions de Commande</a>
+                <a href="#">Politique de Confidentialité</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==========================================================================
+       PRODUCT DETAIL MODAL
+       ========================================================================== -->
+    <div class="modal" id="product-modal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <button class="modal-close-btn" id="modal-close" aria-label="Fermer la fenêtre">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <div class="modal-gallery-wrapper">
+                <div class="modal-main-image-container">
+                    <img src="" alt="" id="modal-main-image">
+                </div>
+                <div class="modal-thumbnails" id="modal-thumbnails">
+                    <!-- Thumbnails dynamically rendered -->
+                </div>
+            </div>
+            
+            <div class="modal-details">
+                <div>
+                    <span class="modal-category" id="modal-category">Luminaires</span>
+                    <h3 class="modal-title" id="modal-title">Lanterne Royale</h3>
+                    <div class="modal-price" id="modal-price">1 850 DH</div>
+                    
+                    <div class="modal-divider"></div>
+                    
+                    <p class="modal-description" id="modal-description">Description...</p>
+                    
+                    <div class="modal-specifications">
+                        <div class="spec-item">
+                            <span class="spec-label">Dimensions</span>
+                            <span class="spec-value" id="modal-dim">65cm x 30cm</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Matériau</span>
+                            <span class="spec-value" id="modal-mat">Cuivre rouge</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Technique</span>
+                            <span class="spec-value" id="modal-tech">Martelage manuel</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Disponibilité</span>
+                            <span class="spec-value" id="modal-avail">En stock</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-actions">
+                    <a href="#" target="_blank" class="btn btn-green" id="modal-whatsapp-btn">
+                        <i class="fa-brands fa-whatsapp"></i> Commander sur WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaflet.js Script for interactive map -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
+    <!-- Custom JS -->
+    <script src="app.js"></script>
+</body>
+</html>
