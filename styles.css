@@ -566,6 +566,26 @@ header.scrolled {
     box-shadow: 0 4px 10px rgba(210, 125, 70, 0.2);
 }
 
+.filter-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(210, 125, 70, 0.12);
+    color: var(--color-copper-dark);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 12px;
+    margin-left: 4px;
+    transition: var(--transition-fast);
+}
+
+.filter-btn.active .filter-count,
+.filter-btn:hover .filter-count {
+    background-color: rgba(255, 255, 255, 0.28);
+    color: var(--text-light);
+}
+
 .products-scroll-wrapper {
     position: relative;
     width: 100%;

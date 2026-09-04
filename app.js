@@ -351,6 +351,20 @@ const products = [
         material: "Laiton poli brillant",
         technique: "Découpe géométrique & soudure",
         availability: "En stock (5 sets)"
+    },
+    {
+        id: 26,
+        title: "Lanterne Majestueuse Toupie en Laiton Doré Ciselé",
+        category: "luminaires",
+        categoryLabel: "Luminaires",
+        price: "2 450 DH",
+        image: "assets/WhatsApp Image 2026-09-03 at 11.53.08 (5).jpeg",
+        images: ["assets/WhatsApp Image 2026-09-03 at 11.53.08 (5).jpeg"],
+        description: "Lanterne suspendue d'exception en forme de toupie royale, ornée de motifs ajourés complexes créant des projections lumineuses féeriques.",
+        dimensions: "Hauteur 80 cm, Diamètre 38 cm",
+        material: "Laiton doré massif",
+        technique: "Ciselure fine & perforation manuelle",
+        availability: "En stock (2 pièces)"
     }
 ];
 
@@ -467,10 +481,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const filterKeyMap = { all: "filter_all", luminaires: "filter_luminaires", "art-table": "filter_table", decoration: "filter_deco", "pieces-uniques": "filter_unique" };
         filterButtons.forEach(btn => {
             const f = btn.getAttribute("data-filter");
-            if (filterKeyMap[f]) {
-                const icon = btn.querySelector("i");
-                btn.textContent = t(filterKeyMap[f]);
-                if (icon) btn.prepend(icon);
+            const labelSpan = btn.querySelector(".btn-label");
+            if (labelSpan && filterKeyMap[f]) {
+                labelSpan.textContent = t(filterKeyMap[f]);
             }
         });
 
@@ -510,7 +523,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="product-price-wrapper">
                     <span class="product-price">${formattedPrice}</span>
                 </div>
-                <p class="product-description">${product.description.substring(0, 85)}...</p>
+                <p class="product-description">${product.description.substring(0, 95)}...</p>
                 <div class="product-actions">
                     <button class="btn btn-secondary order-btn">${t("btn_order")}</button>
                 </div>
@@ -522,55 +535,34 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* ==========================================================================
-       CATEGORY TRACK RENDERER
+       PRODUCT GRID RENDERER
        ========================================================================== */
     function renderProducts(filterCategory = "all") {
         if (!productsContainer) return;
         productsContainer.innerHTML = "";
 
-        const activeCategories = filterCategory === "all"
-            ? categoriesDefinition
-            : categoriesDefinition.filter(c => c.id === filterCategory);
+        const filteredProducts = filterCategory === "all"
+            ? products
+            : products.filter(p => p.category === filterCategory);
 
-        activeCategories.forEach(catDef => {
-            const categoryProducts = products.filter(p => p.category === catDef.id);
-            if (categoryProducts.length === 0) return;
-
-            const block = document.createElement("div");
-            block.className = "category-block";
-            block.id = `category-block-${catDef.id}`;
-
-            block.innerHTML = `
-                <div class="category-header">
-                    <h3><i class="fa-solid ${catDef.icon}"></i> ${t(catDef.labelKey)}</h3>
-                    <span class="category-count">${categoryProducts.length} ${t("pieces")}</span>
-                </div>
-                <div class="products-scroll-wrapper">
-                    <button class="products-scroll-btn prev" aria-label="Précédent">
-                        <i class="fa-solid fa-chevron-left"></i>
-                    </button>
-                    <div class="products-grid horizontal-track"></div>
-                    <button class="products-scroll-btn next" aria-label="Suivant">
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </button>
-                </div>
-                <div class="mobile-scroll-hint">
-                    <i class="fa-solid fa-hand-pointer"></i>
-                    <span>${t("swipe_hint")}</span>
-                    <i class="fa-solid fa-arrow-right-long"></i>
+        if (filteredProducts.length === 0) {
+            productsContainer.innerHTML = `
+                <div style="text-align:center;padding:50px 20px;color:var(--text-muted);width:100%;">
+                    <i class="fa-solid fa-box-open" style="font-size:3rem;margin-bottom:15px;color:var(--color-copper);"></i>
+                    <p>Aucun produit dans cette catégorie pour le moment.</p>
                 </div>
             `;
+            return;
+        }
 
-            const track = block.querySelector(".horizontal-track");
-            categoryProducts.forEach(p => track.appendChild(createProductCard(p)));
+        const grid = document.createElement("div");
+        grid.className = "products-grid";
 
-            const prevBtn = block.querySelector(".products-scroll-btn.prev");
-            const nextBtn = block.querySelector(".products-scroll-btn.next");
-            if (prevBtn) prevBtn.addEventListener("click", () => track.scrollBy({ left: -290, behavior: "smooth" }));
-            if (nextBtn) nextBtn.addEventListener("click", () => track.scrollBy({ left: 290, behavior: "smooth" }));
-
-            productsContainer.appendChild(block);
+        filteredProducts.forEach(product => {
+            grid.appendChild(createProductCard(product));
         });
+
+        productsContainer.appendChild(grid);
     }
 
     // Filter Buttons Interaction
