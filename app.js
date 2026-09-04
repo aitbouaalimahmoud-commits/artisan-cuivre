@@ -355,18 +355,56 @@ const products = [
 ];
 
 /* ==========================================================================
+   TRANSLATIONS (FR / EN)
+   ========================================================================== */
+const translations = {
+    fr: {
+        nav_home: "Accueil", nav_creations: "Créations", nav_savoirfaire: "Savoir-Faire",
+        nav_galerie: "Galerie", nav_artisan: "L'Artisan", nav_contact: "Contact",
+        filter_all: "Tout", filter_luminaires: "Luminaires", filter_table: "Art de la Table",
+        filter_deco: "Décoration", filter_unique: "Pièces Uniques",
+        btn_view: "Voir les détails", btn_order: "Commander",
+        btn_whatsapp: "Commander sur WhatsApp", swipe_hint: "Glissez pour voir plus",
+        pieces: "pièces",
+        cat_luminaires: "Luminaires", cat_table: "Art de la Table",
+        cat_deco: "Décoration", cat_unique: "Pièces Uniques",
+    },
+    en: {
+        nav_home: "Home", nav_creations: "Creations", nav_savoirfaire: "Craftsmanship",
+        nav_galerie: "Gallery", nav_artisan: "The Artisan", nav_contact: "Contact",
+        filter_all: "All", filter_luminaires: "Lighting", filter_table: "Table Art",
+        filter_deco: "Decoration", filter_unique: "Unique Pieces",
+        btn_view: "View Details", btn_order: "Order",
+        btn_whatsapp: "Order on WhatsApp", swipe_hint: "Swipe to see more",
+        pieces: "pieces",
+        cat_luminaires: "Lighting", cat_table: "Table Art",
+        cat_deco: "Decoration", cat_unique: "Unique Pieces",
+    }
+};
+
+let currentLang = "fr";
+
+function t(key) {
+    return (translations[currentLang] || translations.fr)[key] || key;
+}
+
+/* ==========================================================================
    DOM ELEMENTS & APP STATE
    ========================================================================== */
 document.addEventListener("DOMContentLoaded", () => {
+
     // Nav Elements
     const header = document.querySelector("header");
     const burgerMenu = document.querySelector(".burger-menu");
     const navLinks = document.querySelector(".nav-links");
-    
-    // Product Grid & Filter Elements
-    const productsGrid = document.getElementById("products-grid");
+    const navOverlay = document.getElementById("nav-overlay");
+    const langToggleBtn = document.getElementById("lang-toggle-btn");
+    const langLabel = document.getElementById("lang-label");
+
+    // Product Container & Filter Elements
+    const productsContainer = document.getElementById("products-container");
     const filterButtons = document.querySelectorAll(".filter-btn");
-    
+
     // Modal Elements
     const modal = document.getElementById("product-modal");
     const modalClose = document.getElementById("modal-close");
@@ -381,74 +419,157 @@ document.addEventListener("DOMContentLoaded", () => {
     const modalTech = document.getElementById("modal-tech");
     const modalAvail = document.getElementById("modal-avail");
     const modalWhatsAppBtn = document.getElementById("modal-whatsapp-btn");
-    
+
     // Contact Form Elements
     const contactForm = document.getElementById("contact-form");
     const formMessage = document.getElementById("form-message");
+
+    const categoriesDefinition = [
+        { id: "luminaires", labelKey: "cat_luminaires", icon: "fa-lightbulb" },
+        { id: "art-table",  labelKey: "cat_table",      icon: "fa-utensils" },
+        { id: "decoration", labelKey: "cat_deco",       icon: "fa-gem" },
+        { id: "pieces-uniques", labelKey: "cat_unique", icon: "fa-crown" }
+    ];
 
     /* ==========================================================================
        HEADER & NAVIGATION CONTROL
        ========================================================================== */
     window.addEventListener("scroll", () => {
-        if (window.scrollY > 50) {
-            header.classList.add("scrolled");
-        } else {
-            header.classList.remove("scrolled");
-        }
+        header.classList.toggle("scrolled", window.scrollY > 50);
     });
 
-    burgerMenu.addEventListener("click", () => {
-        burgerMenu.classList.toggle("active");
-        navLinks.classList.toggle("active");
-    });
+    function closeMobileMenu() {
+        burgerMenu && burgerMenu.classList.remove("active");
+        navLinks && navLinks.classList.remove("active");
+        navOverlay && navOverlay.classList.remove("active");
+    }
 
-    // Close mobile menu on link click
-    navLinks.querySelectorAll("a").forEach(link => {
-        link.addEventListener("click", () => {
-            burgerMenu.classList.remove("active");
-            navLinks.classList.remove("active");
-        });
-    });
+    function toggleMobileMenu() {
+        burgerMenu && burgerMenu.classList.toggle("active");
+        navLinks && navLinks.classList.toggle("active");
+        navOverlay && navOverlay.classList.toggle("active");
+    }
+
+    if (burgerMenu) burgerMenu.addEventListener("click", toggleMobileMenu);
+    if (navOverlay) navOverlay.addEventListener("click", closeMobileMenu);
+    if (navLinks) navLinks.querySelectorAll("a").forEach(l => l.addEventListener("click", closeMobileMenu));
 
     /* ==========================================================================
-       PRODUCT GRID GENERATION
+       LANGUAGE TOGGLE
        ========================================================================== */
-    function renderProducts(categoryFilter = "all") {
-        productsGrid.innerHTML = "";
-        
-        const filteredProducts = categoryFilter === "all" 
-            ? products 
-            : products.filter(p => p.category === categoryFilter);
+    function applyLanguage() {
+        // Nav links
+        const navItems = navLinks ? navLinks.querySelectorAll("a") : [];
+        const keys = ["nav_home","nav_creations","nav_savoirfaire","nav_galerie","nav_artisan","nav_contact"];
+        navItems.forEach((a, i) => { if (keys[i]) a.textContent = t(keys[i]); });
 
-        filteredProducts.forEach(product => {
-            const card = document.createElement("div");
-            card.className = "product-card";
-            card.setAttribute("data-id", product.id);
-            card.innerHTML = `
-                <div class="product-image-container">
-                    <img src="${product.image}" alt="${product.title}" loading="lazy">
-                    <span class="product-badge">${product.categoryLabel}</span>
-                    <div class="product-overlay">
-                        <button class="btn btn-primary view-details-btn">Voir les détails</button>
-                    </div>
+        // Filter buttons
+        const filterKeyMap = { all: "filter_all", luminaires: "filter_luminaires", "art-table": "filter_table", decoration: "filter_deco", "pieces-uniques": "filter_unique" };
+        filterButtons.forEach(btn => {
+            const f = btn.getAttribute("data-filter");
+            if (filterKeyMap[f]) {
+                const icon = btn.querySelector("i");
+                btn.textContent = t(filterKeyMap[f]);
+                if (icon) btn.prepend(icon);
+            }
+        });
+
+        // Re-render products with updated language
+        const activeFilter = document.querySelector(".filter-btn.active");
+        renderProducts(activeFilter ? activeFilter.getAttribute("data-filter") : "all");
+
+        // Update lang button label
+        if (langLabel) langLabel.textContent = currentLang === "fr" ? "EN" : "FR";
+    }
+
+    if (langToggleBtn) {
+        langToggleBtn.addEventListener("click", () => {
+            currentLang = currentLang === "fr" ? "en" : "fr";
+            applyLanguage();
+        });
+    }
+
+    /* ==========================================================================
+       PRODUCT CARD HELPER
+       ========================================================================== */
+    function createProductCard(product) {
+        const card = document.createElement("div");
+        card.className = "product-card";
+        card.setAttribute("data-id", product.id);
+        const formattedPrice = product.price.replace(/\s+/g, "\u00a0");
+        card.innerHTML = `
+            <div class="product-image-container">
+                <img src="${product.image}" alt="${product.title}" loading="lazy">
+                <span class="product-badge">${product.categoryLabel}</span>
+                <div class="product-overlay">
+                    <button class="btn btn-primary view-details-btn">${t("btn_view")}</button>
                 </div>
-                <div class="product-content">
-                    <div class="product-meta">
-                        <h3 class="product-title">${product.title}</h3>
-                        <span class="product-price">${product.price}</span>
-                    </div>
-                    <p class="product-description">${product.description.substring(0, 85)}...</p>
-                    <div class="product-actions">
-                        <button class="btn btn-secondary order-btn">Commander</button>
-                    </div>
+            </div>
+            <div class="product-content">
+                <h3 class="product-title">${product.title}</h3>
+                <div class="product-price-wrapper">
+                    <span class="product-price">${formattedPrice}</span>
+                </div>
+                <p class="product-description">${product.description.substring(0, 85)}...</p>
+                <div class="product-actions">
+                    <button class="btn btn-secondary order-btn">${t("btn_order")}</button>
+                </div>
+            </div>
+        `;
+        card.querySelector(".view-details-btn").addEventListener("click", () => openModal(product));
+        card.querySelector(".order-btn").addEventListener("click", () => orderWhatsApp(product));
+        return card;
+    }
+
+    /* ==========================================================================
+       CATEGORY TRACK RENDERER
+       ========================================================================== */
+    function renderProducts(filterCategory = "all") {
+        if (!productsContainer) return;
+        productsContainer.innerHTML = "";
+
+        const activeCategories = filterCategory === "all"
+            ? categoriesDefinition
+            : categoriesDefinition.filter(c => c.id === filterCategory);
+
+        activeCategories.forEach(catDef => {
+            const categoryProducts = products.filter(p => p.category === catDef.id);
+            if (categoryProducts.length === 0) return;
+
+            const block = document.createElement("div");
+            block.className = "category-block";
+            block.id = `category-block-${catDef.id}`;
+
+            block.innerHTML = `
+                <div class="category-header">
+                    <h3><i class="fa-solid ${catDef.icon}"></i> ${t(catDef.labelKey)}</h3>
+                    <span class="category-count">${categoryProducts.length} ${t("pieces")}</span>
+                </div>
+                <div class="products-scroll-wrapper">
+                    <button class="products-scroll-btn prev" aria-label="Précédent">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <div class="products-grid horizontal-track"></div>
+                    <button class="products-scroll-btn next" aria-label="Suivant">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+                <div class="mobile-scroll-hint">
+                    <i class="fa-solid fa-hand-pointer"></i>
+                    <span>${t("swipe_hint")}</span>
+                    <i class="fa-solid fa-arrow-right-long"></i>
                 </div>
             `;
-            
-            // Add click events
-            card.querySelector(".view-details-btn").addEventListener("click", () => openModal(product));
-            card.querySelector(".order-btn").addEventListener("click", () => orderWhatsApp(product));
-            
-            productsGrid.appendChild(card);
+
+            const track = block.querySelector(".horizontal-track");
+            categoryProducts.forEach(p => track.appendChild(createProductCard(p)));
+
+            const prevBtn = block.querySelector(".products-scroll-btn.prev");
+            const nextBtn = block.querySelector(".products-scroll-btn.next");
+            if (prevBtn) prevBtn.addEventListener("click", () => track.scrollBy({ left: -290, behavior: "smooth" }));
+            if (nextBtn) nextBtn.addEventListener("click", () => track.scrollBy({ left: 290, behavior: "smooth" }));
+
+            productsContainer.appendChild(block);
         });
     }
 
@@ -457,9 +578,7 @@ document.addEventListener("DOMContentLoaded", () => {
         button.addEventListener("click", () => {
             filterButtons.forEach(btn => btn.classList.remove("active"));
             button.classList.add("active");
-            
-            const filterValue = button.getAttribute("data-filter");
-            renderProducts(filterValue);
+            renderProducts(button.getAttribute("data-filter"));
         });
     });
 
@@ -470,6 +589,7 @@ document.addEventListener("DOMContentLoaded", () => {
        PRODUCT MODAL CONTROLLER
        ========================================================================== */
     function openModal(product) {
+        if (!modal) return;
         modalCategory.textContent = product.categoryLabel;
         modalTitle.textContent = product.title;
         modalPrice.textContent = product.price;
@@ -478,144 +598,91 @@ document.addEventListener("DOMContentLoaded", () => {
         modalMat.textContent = product.material;
         modalTech.textContent = product.technique;
         modalAvail.textContent = product.availability;
-        
-        // Setup WhatsApp link
+
         const whatsappText = encodeURIComponent(`Bonjour Cuivre Abderrazak, je suis très intéressé(e) par le produit "${product.title}" (${product.price}). Pouvez-vous m'indiquer la disponibilité et les modalités de livraison ? Merci !`);
         modalWhatsAppBtn.href = `https://wa.me/212670190161?text=${whatsappText}`;
+        if (modalWhatsAppBtn.querySelector("span")) modalWhatsAppBtn.querySelector("span").textContent = t("btn_whatsapp");
 
-        // Gallery images
         modalMainImage.src = product.image;
         modalMainImage.alt = product.title;
-        
-        // Thumbnails rendering
         modalThumbnails.innerHTML = "";
-        
-        // Use default images if product images are incomplete
-        const imagesList = product.images && product.images.length > 0 
-            ? product.images 
-            : [product.image];
-            
+
+        const imagesList = product.images && product.images.length > 0 ? product.images : [product.image];
         imagesList.forEach((imgSrc, idx) => {
             const thumbBtn = document.createElement("button");
-            thumbBtn.className = `thumbnail-btn ${idx === 0 ? 'active' : ''}`;
+            thumbBtn.className = `thumbnail-btn ${idx === 0 ? "active" : ""}`;
             thumbBtn.innerHTML = `<img src="${imgSrc}" alt="${product.title} miniature ${idx + 1}">`;
-            
             thumbBtn.addEventListener("click", () => {
-                modalThumbnails.querySelectorAll(".thumbnail-btn").forEach(btn => btn.classList.remove("active"));
+                modalThumbnails.querySelectorAll(".thumbnail-btn").forEach(b => b.classList.remove("active"));
                 thumbBtn.classList.add("active");
                 modalMainImage.src = imgSrc;
             });
-            
             modalThumbnails.appendChild(thumbBtn);
         });
 
-        // Open modal
         modal.classList.add("active");
-        document.body.style.overflow = "hidden"; // disable scroll
+        document.body.style.overflow = "hidden";
     }
 
     function closeModal() {
+        if (!modal) return;
         modal.classList.remove("active");
-        document.body.style.overflow = ""; // restore scroll
+        document.body.style.overflow = "";
     }
 
-    modalClose.addEventListener("click", closeModal);
-    modal.querySelector(".modal-backdrop").addEventListener("click", closeModal);
-
-    // Escape Key to close Modal
-    document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && modal.classList.contains("active")) {
-            closeModal();
-        }
+    if (modalClose) modalClose.addEventListener("click", closeModal);
+    if (modal) modal.querySelector(".modal-backdrop").addEventListener("click", closeModal);
+    document.addEventListener("keydown", e => {
+        if (e.key === "Escape" && modal && modal.classList.contains("active")) closeModal();
     });
 
     function orderWhatsApp(product) {
         const text = encodeURIComponent(`Bonjour Cuivre Abderrazak, je souhaite commander la création "${product.title}" au prix de ${product.price}. Pouvez-vous me confirmer la disponibilité ?`);
-        window.open(`https://wa.me/212670190161?text=${text}`, '_blank');
+        window.open(`https://wa.me/212670190161?text=${text}`, "_blank");
     }
 
     /* ==========================================================================
-       MAP SIMULATION (LEAFLET INTERACTIVE MAP)
+       MAP (LEAFLET)
        ========================================================================== */
     function initMap() {
-        // Medina of Marrakech, Morocco coordinates: 31.6295, -7.9811
         const mapPosition = [31.6295, -7.9811];
-        
         try {
-            const map = L.map('map', {
-                scrollWheelZoom: false
-            }).setView(mapPosition, 16);
-
-            // Using CartoDB Positron - light, elegant tiles that match the creme aesthetic
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            const map = L.map("map", { scrollWheelZoom: false }).setView(mapPosition, 16);
+            L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
+                attribution: "&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors &copy; <a href='https://carto.com/attributions'>CARTO</a>",
                 maxZoom: 20
             }).addTo(map);
-
-            // Custom Leaflet DivIcon to match copper theme
             const copperIcon = L.divIcon({
-                className: 'custom-map-pin',
-                html: `<div style="
-                    width: 20px; 
-                    height: 20px; 
-                    background-color: var(--color-copper); 
-                    border: 3px solid var(--bg-primary); 
-                    border-radius: 50%;
-                    box-shadow: 0 4px 10px rgba(210, 125, 70, 0.4);
-                "></div>`,
-                iconSize: [20, 20],
-                iconAnchor: [10, 10]
+                className: "custom-map-pin",
+                html: `<div style="width:20px;height:20px;background-color:var(--color-copper);border:3px solid var(--bg-primary);border-radius:50%;box-shadow:0 4px 10px rgba(210,125,70,0.4);"></div>`,
+                iconSize: [20, 20], iconAnchor: [10, 10]
             });
-
-            L.marker(mapPosition, { icon: copperIcon })
-                .addTo(map)
-                .bindPopup(`
-                    <div style="font-family: var(--font-body); padding: 5px;">
-                        <h4 style="font-family: var(--font-heading); margin-bottom: 5px; color: var(--color-copper);">Cuivre Abderrazak</h4>
-                        <p style="font-size: 0.85rem; margin: 0;">12 Rue de la Kessaria, Médina, Marrakech, Maroc</p>
-                    </div>
-                `)
+            L.marker(mapPosition, { icon: copperIcon }).addTo(map)
+                .bindPopup(`<div style="font-family:var(--font-body);padding:5px;"><h4 style="font-family:var(--font-heading);margin-bottom:5px;color:var(--color-copper);">Cuivre Abderrazak</h4><p style="font-size:0.85rem;margin:0;">12 Rue de la Kessaria, Médina, Marrakech, Maroc</p></div>`)
                 .openPopup();
         } catch (error) {
-            console.warn("Leaflet Map failed to load. Displaying static style or mock map instead.", error);
-            // Inject a nice placeholder design if script is blocked or offline
             const mapContainer = document.getElementById("map");
             if (mapContainer) {
-                mapContainer.innerHTML = `
-                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; background-color: var(--bg-secondary); padding: 20px; text-align: center;">
-                        <span style="font-size: 3rem; color: var(--color-copper); margin-bottom: 15px;">📍</span>
-                        <h4 style="font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 10px;">Cuivre Abderrazak - Marrakech</h4>
-                        <p style="color: var(--text-muted); font-size: 0.95rem;">12 Rue de la Kessaria, Médina, Marrakech, Maroc</p>
-                        <p style="font-size: 0.85rem; margin-top: 15px; background: white; padding: 8px 15px; border-radius: 20px; border: 1px solid rgba(210,125,70,0.2);">Carte indisponible hors ligne</p>
-                    </div>
-                `;
+                mapContainer.innerHTML = `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;background:var(--bg-secondary);padding:20px;text-align:center;"><span style="font-size:3rem;color:var(--color-copper);margin-bottom:15px;">📍</span><h4 style="font-family:var(--font-heading);font-size:1.3rem;margin-bottom:10px;">Cuivre Abderrazak - Marrakech</h4><p style="color:var(--text-muted);font-size:0.95rem;">12 Rue de la Kessaria, Médina, Marrakech, Maroc</p></div>`;
             }
         }
     }
-    
-    // Call map init
     initMap();
 
     /* ==========================================================================
-       CONTACT FORM HANDLING (SIMULATED)
+       CONTACT FORM
        ========================================================================== */
     if (contactForm) {
-        contactForm.addEventListener("submit", (e) => {
+        contactForm.addEventListener("submit", e => {
             e.preventDefault();
-            
             const submitBtn = contactForm.querySelector("button[type='submit']");
             const originalBtnText = submitBtn.innerHTML;
-            
-            // Show loading spinner/text
             submitBtn.innerHTML = `<span>Envoi en cours...</span>`;
             submitBtn.disabled = true;
-            
-            // Simulate API request delay
             setTimeout(() => {
                 const name = document.getElementById("name").value.trim();
                 const email = document.getElementById("email").value.trim();
                 const message = document.getElementById("message").value.trim();
-                
                 if (name && email && message) {
                     formMessage.className = "form-message success";
                     formMessage.textContent = "Merci pour votre message ! Abderrazak vous répondra très prochainement par e-mail ou téléphone.";
@@ -624,16 +691,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     formMessage.className = "form-message error";
                     formMessage.textContent = "Une erreur est survenue. Veuillez remplir tous les champs obligatoires.";
                 }
-                
-                // Reset button
                 submitBtn.innerHTML = originalBtnText;
                 submitBtn.disabled = false;
-                
-                // Hide message after 8 seconds
-                setTimeout(() => {
-                    formMessage.style.display = "none";
-                }, 8000);
+                setTimeout(() => { formMessage.style.display = "none"; }, 8000);
             }, 1500);
         });
     }
-});
+
+}); // end DOMContentLoaded
