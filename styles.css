@@ -948,7 +948,8 @@ header.scrolled {
     background-color: white;
 }
 
-.modal-main-image-container img {
+.modal-main-image-container img,
+.modal-main-image-container video {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -979,6 +980,21 @@ header.scrolled {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.thumbnail-btn.video-thumb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1e1b18;
+    border: 2px solid rgba(210, 125, 70, 0.3);
+}
+
+.thumbnail-btn.video-thumb:hover,
+.thumbnail-btn.video-thumb.active {
+    border-color: var(--color-copper);
+    background: #2a2420;
+    box-shadow: 0 0 10px rgba(210, 125, 70, 0.4);
 }
 
 .modal-details {
@@ -1055,6 +1071,154 @@ header.scrolled {
 
 .modal-actions .btn {
     flex: 1;
+}
+
+/* ==========================================================================
+   COMMENT COMMANDER SECTION
+   ========================================================================== */
+.commander-section {
+    background-color: var(--bg-secondary);
+    padding: 100px 0;
+}
+
+.commander-steps {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0;
+    margin: 60px 0 70px 0;
+    flex-wrap: wrap;
+}
+
+.commander-step {
+    flex: 1;
+    min-width: 160px;
+    max-width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 10px;
+}
+
+.commander-step-icon {
+    position: relative;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: var(--bg-primary);
+    border: 2px solid var(--color-copper-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.7rem;
+    color: var(--color-copper);
+    margin-bottom: 18px;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-smooth);
+}
+
+.commander-step:hover .commander-step-icon {
+    background: var(--color-copper);
+    color: var(--text-light);
+    border-color: var(--color-copper);
+    transform: scale(1.1);
+    box-shadow: 0 10px 25px rgba(210, 125, 70, 0.3);
+}
+
+.commander-step-num {
+    position: absolute;
+    top: -6px;
+    right: 4px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--color-gold);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-sm);
+}
+
+.commander-step h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--text-main);
+}
+
+.commander-step p {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+.commander-step-arrow {
+    display: flex;
+    align-items: center;
+    padding-top: 35px;
+    color: var(--color-copper-light);
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.commander-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    margin-top: 20px;
+}
+
+.commander-info-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.commander-info-card {
+    background: var(--bg-primary);
+    border: 1px solid rgba(210, 125, 70, 0.15);
+    border-radius: var(--border-radius-md);
+    padding: 30px 25px;
+    text-align: center;
+    transition: var(--transition-smooth);
+}
+
+.commander-info-card:hover {
+    border-color: var(--color-copper);
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px rgba(210, 125, 70, 0.15);
+}
+
+.commander-info-card i {
+    font-size: 2rem;
+    color: var(--color-copper);
+    margin-bottom: 15px;
+    display: block;
+}
+
+.commander-info-card h4 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--text-main);
+}
+
+.commander-info-card p {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+.btn-lg {
+    padding: 16px 40px;
+    font-size: 1.05rem;
 }
 
 /* ==========================================================================
@@ -2139,5 +2303,41 @@ footer {
     
     .modal-actions {
         flex-direction: column;
+    }
+
+    .commander-info-cards {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .commander-steps {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+        margin: 40px 0 50px 0;
+    }
+
+    .commander-step {
+        flex-direction: row;
+        text-align: left;
+        max-width: 100%;
+        width: 100%;
+        gap: 20px;
+        padding: 0;
+    }
+
+    .commander-step-icon {
+        margin-bottom: 0;
+        flex-shrink: 0;
+    }
+
+    .commander-step-arrow {
+        transform: rotate(90deg);
+        padding-top: 0;
+    }
+
+    .commander-info-cards {
+        grid-template-columns: 1fr;
     }
 }
