@@ -669,10 +669,10 @@ const products = [
         category: "luminaires",
         categoryLabel: "Luminaires",
         price: "1 860 DH",
-        image: "assets/IMG-20261005-WA0018.jpg",
+        image: "assets/IMG-20261005-WA0015.jpg",
         images: [
             "assets/IMG-20261005-WA0018.jpg",
-            "assets/IMG-20261005-WA0015.jpg",
+            
             
         ],
         description: "Lampe à poser majestueuse en forme de goutte royale en laiton doré brossé reposant sur un socle massif. Ses délicates ciselures florales filtrent la lumière avec une infinie douceur pour créer une atmosphère feutrée et chaleureuse.",
@@ -687,10 +687,10 @@ const products = [
         category: "luminaires",
         categoryLabel: "Luminaires",
         price: "1 750 DH",
-        image: "assets/IMG-20261005-WA0021.jpg",
+        image: "assets/IMG-20261005-WA0030.jpg",
         images: [
             "assets/IMG-20261005-WA0021.jpg",
-            "assets/IMG-20261005-WA0030.jpg",
+            
             "assets/IMG-20261005-WA0019.jpg",
             
         ],
@@ -706,10 +706,10 @@ const products = [
         category: "luminaires",
         categoryLabel: "Luminaires",
         price: "1 980 DH",
-        image: "assets/IMG-20261005-WA0026.jpg",
+        image: "assets/IMG-20261005-WA0024.jpg",
         images: [
             "assets/IMG-20261005-WA0026.jpg",
-            "assets/IMG-20261005-WA0024.jpg",
+            
             
         ],
         description: "Lampe ovoïde contemporaine en laiton doré reposant sur un élégant socle carré à gradins. Sa surface finement piquetée projette une lumière constellation tamisée parfaite pour les ambiances lounge et cosy.",
