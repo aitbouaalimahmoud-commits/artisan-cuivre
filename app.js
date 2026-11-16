@@ -503,12 +503,10 @@ const products = [
         category: "luminaires",
         categoryLabel: "Luminaires",
         price: "1 759.67 DH",
-        image: "assets/IMG-20261011-WA0027.jpg",
+        image: "assets/plafonnier_soucoupe_etoile_ambiance.jpg",
         images: [
-            "assets/IMG-20261011-WA0027.jpg",
-            
-            "assets/IMG-20261011-WA0022.jpg",
-            "assets/IMG-20261011-WA0023.jpg"
+            "assets/plafonnier_soucoupe_etoile_ambiance.jpg",
+            "assets/plafonnier_soucoupe_etoile_dimensions.jpg"
         ],
         description: "Plafonnier contemporain galbé en forme de soucoupe orientale en laiton doré massif. Minutieusement perforé d'un semis d'étoiles, il transforme votre plafond en une véritable voûte céleste féerique tout en assurant un éclairage central chaleureux.",
         dimensions: "Diamètre 25 cm (9.8 in), Fixation plafond laiton incluse",
