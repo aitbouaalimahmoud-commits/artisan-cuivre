@@ -533,6 +533,96 @@ header.scrolled {
 /* ==========================================================================
    PRODUCTS SECTION
    ========================================================================== */
+
+/* --- Search Bar --- */
+.products-search-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.products-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 520px;
+    background: #fff;
+    border: 2px solid var(--color-copper, #b87333);
+    border-radius: 50px;
+    padding: 0 20px;
+    box-shadow: 0 4px 18px rgba(184,115,51,0.13);
+    transition: box-shadow 0.3s, border-color 0.3s;
+}
+
+.products-search:focus-within {
+    box-shadow: 0 6px 24px rgba(184,115,51,0.25);
+    border-color: var(--color-gold, #d4a853);
+}
+
+.products-search > .fa-magnifying-glass {
+    color: var(--color-copper, #b87333);
+    font-size: 1rem;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+#products-search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 0.95rem;
+    color: #333;
+    padding: 14px 0;
+    font-family: inherit;
+}
+
+#products-search-input::placeholder {
+    color: #aaa;
+}
+
+.search-clear-btn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #aaa;
+    font-size: 1rem;
+    padding: 4px 6px;
+    border-radius: 50%;
+    transition: color 0.2s, background 0.2s;
+    flex-shrink: 0;
+}
+
+.search-clear-btn:hover {
+    color: var(--color-copper, #b87333);
+    background: rgba(184,115,51,0.08);
+}
+
+.search-clear-btn.visible {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-no-results {
+    text-align: center;
+    padding: 60px 20px;
+    color: #888;
+    font-size: 1.1rem;
+}
+
+.search-no-results i {
+    display: block;
+    font-size: 3rem;
+    color: var(--color-copper, #b87333);
+    margin-bottom: 15px;
+    opacity: 0.5;
+}
+
+/* --- End Search Bar --- */
+
 .products-filter {
     display: flex;
     justify-content: center;
@@ -2141,6 +2231,20 @@ footer {
     }
 
     /* Horizontal Products Scroll Carousel on Mobile */
+    .products-search-wrapper {
+        padding: 0 10px;
+    }
+
+    .products-search {
+        max-width: 100%;
+        padding: 0 14px;
+    }
+
+    #products-search-input {
+        font-size: 0.88rem;
+        padding: 12px 0;
+    }
+
     .products-filter {
         justify-content: flex-start;
         overflow-x: auto;

@@ -949,21 +949,37 @@ document.addEventListener("DOMContentLoaded", () => {
     /* ==========================================================================
        PRODUCT GRID RENDERER
        ========================================================================== */
-    function renderProducts(filterCategory = "all") {
+    function renderProducts(filterCategory = "all", searchQuery = "") {
         if (!productsContainer) return;
         productsContainer.innerHTML = "";
 
-        const filteredProducts = filterCategory === "all"
+        // Step 1: filter by category
+        let filteredProducts = filterCategory === "all"
             ? products
             : products.filter(p => p.category === filterCategory);
 
+        // Step 2: filter by search query
+        const query = searchQuery.trim().toLowerCase();
+        if (query.length > 0) {
+            filteredProducts = filteredProducts.filter(p =>
+                p.title.toLowerCase().includes(query) ||
+                (p.description && p.description.toLowerCase().includes(query)) ||
+                (p.material && p.material.toLowerCase().includes(query))
+            );
+        }
+
         if (filteredProducts.length === 0) {
-            productsContainer.innerHTML = `
-                <div style="text-align:center;padding:50px 20px;color:var(--text-muted);width:100%;">
-                    <i class="fa-solid fa-box-open" style="font-size:3rem;margin-bottom:15px;color:var(--color-copper);"></i>
-                    <p>Aucun produit dans cette catégorie pour le moment.</p>
-                </div>
-            `;
+            const emptyMsg = query.length > 0
+                ? `<div class="search-no-results">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <p>Aucun résultat pour "<strong>${searchQuery}</strong>"</p>
+                        <small>Essayez un autre mot-clé (ex: lanterne, plafonnier, laiton...)</small>
+                   </div>`
+                : `<div style="text-align:center;padding:50px 20px;color:var(--text-muted);width:100%;">
+                        <i class="fa-solid fa-box-open" style="font-size:3rem;margin-bottom:15px;color:var(--color-copper);"></i>
+                        <p>Aucun produit dans cette catégorie pour le moment.</p>
+                   </div>`;
+            productsContainer.innerHTML = emptyMsg;
             return;
         }
 
@@ -982,9 +998,41 @@ document.addEventListener("DOMContentLoaded", () => {
         button.addEventListener("click", () => {
             filterButtons.forEach(btn => btn.classList.remove("active"));
             button.classList.add("active");
-            renderProducts(button.getAttribute("data-filter"));
+            const searchInput = document.getElementById("products-search-input");
+            const query = searchInput ? searchInput.value : "";
+            renderProducts(button.getAttribute("data-filter"), query);
         });
     });
+
+    // Search Bar Logic
+    const searchInput = document.getElementById("products-search-input");
+    const searchClearBtn = document.getElementById("search-clear-btn");
+
+    if (searchInput) {
+        searchInput.addEventListener("input", () => {
+            const query = searchInput.value;
+            const activeFilter = document.querySelector(".filter-btn.active");
+            const category = activeFilter ? activeFilter.getAttribute("data-filter") : "all";
+            // Show/hide clear button
+            if (query.trim().length > 0) {
+                searchClearBtn && searchClearBtn.classList.add("visible");
+            } else {
+                searchClearBtn && searchClearBtn.classList.remove("visible");
+            }
+            renderProducts(category, query);
+        });
+    }
+
+    if (searchClearBtn) {
+        searchClearBtn.addEventListener("click", () => {
+            if (searchInput) searchInput.value = "";
+            searchClearBtn.classList.remove("visible");
+            const activeFilter = document.querySelector(".filter-btn.active");
+            const category = activeFilter ? activeFilter.getAttribute("data-filter") : "all";
+            renderProducts(category, "");
+            if (searchInput) searchInput.focus();
+        });
+    }
 
     // Update filter counts dynamically
     function updateFilterCounts() {
