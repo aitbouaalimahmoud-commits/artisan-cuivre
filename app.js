@@ -91,7 +91,7 @@ const products = [
         title: "Lanterne Cylindrique Andalouse",
         category: "luminaires",
         categoryLabel: "Luminaires",
-        price: "760 DH",
+        price: "1150 DH",
         image: "assets/WhatsApp Image 2026-09-03 at 11.53.04 (4).jpeg",
         images: ["assets/WhatsApp Image 2026-09-03 at 11.53.04 (4).jpeg"],
         description: "Suspension cylindrique épurée en laiton gravé aux arabesques inspirées de l'architecture andalouse. Idéale pour les couloirs ou les coins lecture.",
