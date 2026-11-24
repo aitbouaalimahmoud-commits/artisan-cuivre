@@ -753,6 +753,24 @@ const products = [
         material: "Laiton doré patiné & diffuseur cylindrique opale",
         technique: "Ciselure à cannelures, façonnage du laiton & polissage d'art",
         availability: "En stock"
+    },
+    {
+        id: 54,
+        title: "Lampe Goutte Marocaine Ajourée en Laiton Doré",
+        category: "luminaires",
+        categoryLabel: "Luminaires",
+        price: "1 750 DH",
+        image: "assets/lampe_goutte_marocaine_ajoure_1750_principale.png",
+        images: [
+            "assets/lampe_goutte_marocaine_ajoure_1750_principale.png",
+            "assets/lampe_goutte_marocaine_ajoure_1750_ambiance.png",
+            "assets/lampe_goutte_marocaine_ajoure_1750_chambre.png"
+        ],
+        description: "Lampe à poser en laiton doré sculptée en forme de goutte élancée et entièrement ajourée de motifs floraux marocains. Elle diffuse une lumière chaleureuse et dessine de magnifiques ombres décoratives sur les murs.",
+        dimensions: "Hauteur 30 cm",
+        material: "Laiton doré ajouré",
+        technique: "Découpe, ajourage et finition artisanale à la main",
+        availability: "En stock"
     }
 ];
 
