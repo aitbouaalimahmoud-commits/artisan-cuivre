@@ -1095,7 +1095,7 @@ document.addEventListener("DOMContentLoaded", () => {
         modalAvail.textContent = product.availability;
 
         const whatsappText = encodeURIComponent(`Bonjour Maison du Cuivre – Marrakech, je suis très intéressé(e) par le produit "${product.title}" (${product.price} / ~${eurPrice}). Pouvez-vous m'indiquer la disponibilité et les modalités de livraison ? Merci !`);
-        modalWhatsAppBtn.href = `https://wa.me/212670190161?text=${whatsappText}`;
+        modalWhatsAppBtn.href = `https://wa.me/212670689691?text=${whatsappText}`;
         if (modalWhatsAppBtn.querySelector("span")) modalWhatsAppBtn.querySelector("span").textContent = t("btn_whatsapp");
 
         const mainContainer = modalMainImage.parentElement;
@@ -1179,7 +1179,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function orderWhatsApp(product) {
         const eurPrice = getEuroPrice(product);
         const text = encodeURIComponent(`Bonjour Maison du Cuivre – Marrakech, je souhaite commander la création "${product.title}" au prix de ${product.price} (~${eurPrice}). Pouvez-vous me confirmer la disponibilité ?`);
-        window.open(`https://wa.me/212670190161?text=${text}`, "_blank");
+        window.open(`https://wa.me/212670689691?text=${text}`, "_blank");
     }
 
     /* ==========================================================================
